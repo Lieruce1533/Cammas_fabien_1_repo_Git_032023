@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+git add<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/display_neighbour_avatar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:contentDescription="@string/neighbour_picture"
@@ -29,7 +29,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/display_neighbour_avatar"
         app:layout_constraintVertical_bias="1.0">
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -47,10 +47,11 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/TextViewNameNeighbour"
+                android:id="@+id/display_neighbour_name_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                tools:text="Neighbour's Name"/>
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -60,12 +61,15 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/ImageAddress" />
                 <TextView
+                    android:id="@+id/display_neighbour_address_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:text="Adresse"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -79,8 +83,10 @@
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/ImagePhone" />
                 <TextView
+                    android:id="@+id/display_neighbour_phone_number_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:text="Phone Number"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -92,10 +98,13 @@
                 <ImageButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:contentDescription="@string/ImageSocialNetwork" />
+                    android:contentDescription="@string/ImageSocialNetwork"
+                    />
                 <TextView
+                    android:id="@+id/display_neighbour_social_network_textview"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    tools:text="Social Network Page"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -109,24 +118,25 @@
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
             android:orientation="vertical"
-            android:background="@color/colorClearGrey"
+            android:background="@drawable/ic_rounded_edge_light_grey"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/LinearLayoutCompatNeighbour">
 
             <TextView
-                android:id="@+id/TextViewTitleAboutMe"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="@string/About_Me" />
 
             <TextView
-                android:id="@+id/TextViewAboutMe"
+                android:id="@+id/display_neighbour_about_me_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                tools:text="@string/Text_About_Me"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
