@@ -1,6 +1,11 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +56,7 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
+
     }
 
     @Override
@@ -69,6 +75,16 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+
+            //Mon implémentation pour lancer DisplayNeighbourActivity aprés un clic sur un des neighbours
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent displayNeighbourActivityIntent = new Intent(itemView.getContext(), DisplayNeighbourActivity.class);
+                    view.getContext().startActivity(displayNeighbourActivityIntent);
+                }
+            });
         }
     }
 }
