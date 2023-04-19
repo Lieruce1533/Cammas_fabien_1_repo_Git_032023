@@ -1,6 +1,7 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -22,7 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 
-public class NeighbourFragment extends Fragment {
+public class NeighbourFragment extends Fragment implements RecyclerViewInterface {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
@@ -60,7 +61,7 @@ public class NeighbourFragment extends Fragment {
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this ));
     }
 
     @Override
@@ -89,5 +90,18 @@ public class NeighbourFragment extends Fragment {
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent displayNeighbourActivityIntent = new Intent(NeighbourFragment.this.requireActivity(), DisplayNeighbourActivity.class);
+        displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
+        displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
+        displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
+        displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
+        displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());
+
+        startActivity(displayNeighbourActivityIntent);
+
     }
 }

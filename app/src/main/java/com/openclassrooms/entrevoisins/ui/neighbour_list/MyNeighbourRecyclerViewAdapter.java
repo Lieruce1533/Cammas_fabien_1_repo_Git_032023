@@ -29,15 +29,19 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+    private final RecyclerViewInterface mRecyclerViewInterface;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, RecyclerViewInterface mRecyclerViewInterface) {
         mNeighbours = items;
+        this.mRecyclerViewInterface = mRecyclerViewInterface;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.itemview_neighbour, parent, false);
+
+
         return new ViewHolder(view);
     }
 
@@ -56,7 +60,21 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 EventBus.getDefault().post(new DeleteNeighbourEvent(neighbour));
             }
         });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int pos = holder.getAdapterPosition();
+                mRecyclerViewInterface.onItemClick(pos);
+                /*if (mRecyclerViewInterface != null){
+                    int pos = holder.getAdapterPosition();
 
+                    if (pos != RecyclerView.NO_POSITION){
+                        mRecyclerViewInterface.onItemClick(pos);
+                    }
+
+                }*/
+            }
+        });
     }
 
     @Override
@@ -76,15 +94,23 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             super(view);
             ButterKnife.bind(this, view);
 
-            //Mon implémentation pour lancer DisplayNeighbourActivity aprés un clic sur un des neighbours
+            /*Mon implémentation pour lancer DisplayNeighbourActivity aprés un clic sur un des neighbours
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent displayNeighbourActivityIntent = new Intent(itemView.getContext(), DisplayNeighbourActivity.class);
-                    view.getContext().startActivity(displayNeighbourActivityIntent);
+                    if (mRecyclerViewInterface != null){
+                        int pos = getAdapterPosition();
+
+                        if (pos != RecyclerView.NO_POSITION){
+                            mRecyclerViewInterface.onItemClick(pos);
+                        }
+
+                    }
                 }
-            });
+            });*/
+
+
         }
     }
 }
