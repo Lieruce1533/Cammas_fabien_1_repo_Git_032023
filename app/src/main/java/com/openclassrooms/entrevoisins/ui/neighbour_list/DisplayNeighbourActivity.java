@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
 
 import butterknife.BindView;
@@ -15,7 +16,7 @@ import butterknife.Unbinder;
 
 public class DisplayNeighbourActivity extends AppCompatActivity {
 
-    @BindView(R.id.avatar)
+    @BindView(R.id.display_neighbour_avatar)
     ImageView nAvatar;
     @BindView(R.id.display_neighbour_name_textview)
     TextView nName;
@@ -43,7 +44,8 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        nAvatar.setImageURI(Uri.parse(avatarNeighbour));
+        //nAvatar.setImageURI(Uri.parse(avatarNeighbour));
+        Glide.with(this).load(avatarNeighbour).into(nAvatar);
         nName.setText(nameNeighbour);
         nPhone.setText(phoneNumberNeighbour);
         nAddress.setText(addressNeighbour);

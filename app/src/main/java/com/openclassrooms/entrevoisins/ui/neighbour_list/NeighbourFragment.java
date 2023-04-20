@@ -92,6 +92,10 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
         initList();
     }
 
+    /**
+     * fired if the user clicks on a element of thee recyclerView
+     * @param position
+     */
     @Override
     public void onItemClick(int position) {
         Intent displayNeighbourActivityIntent = new Intent(NeighbourFragment.this.requireActivity(), DisplayNeighbourActivity.class);
