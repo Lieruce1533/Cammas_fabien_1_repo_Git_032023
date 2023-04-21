@@ -2,6 +2,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,23 +36,33 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_neighbour);
+        Intent intent = getIntent();
+        if (intent != null){
+            Neighbour neighbour = intent.getParcelableExtra("neighbour");
+            if (neighbour != null){
 
-        String nameNeighbour = getIntent().getStringExtra("Name_Neighbour");
-        String addressNeighbour = getIntent().getStringExtra("Address_Neighbour");
-        String phoneNumberNeighbour= getIntent().getStringExtra("Phone_Number");
-        String aboutNeighbour = getIntent().getStringExtra("About_Me");
-        String avatarNeighbour = getIntent().getStringExtra("Avatar_neighbour");
-        String socialNetNeighbour = ("www.facebook.fr/"+nameNeighbour);
+                String nameNeighbour = neighbour.getName();
+                String addressNeighbour = neighbour.getAddress();
+                String phoneNumberNeighbour= neighbour.getPhoneNumber();
+                String aboutNeighbour = neighbour.getAboutMe();
+                String avatarNeighbour = neighbour.getAvatarUrl();
+                String socialNetNeighbour = ("www.facebook.fr/"+nameNeighbour);
 
-        ButterKnife.bind(this);
+                ButterKnife.bind(this);
 
-        //nAvatar.setImageURI(Uri.parse(avatarNeighbour));
-        Glide.with(this).load(avatarNeighbour).into(nAvatar);
-        nName.setText(nameNeighbour);
-        nPhone.setText(phoneNumberNeighbour);
-        nAddress.setText(addressNeighbour);
-        nAboutMe.setText(aboutNeighbour);
-        nSocialNet.setText(socialNetNeighbour);
+                //nAvatar.setImageURI(Uri.parse(avatarNeighbour));
+                Glide.with(this).load(avatarNeighbour).into(nAvatar);
+                nName.setText(nameNeighbour);
+                nPhone.setText(phoneNumberNeighbour);
+                nAddress.setText(addressNeighbour);
+                nAboutMe.setText(aboutNeighbour);
+                nSocialNet.setText(socialNetNeighbour);
+
+
+            }
+        }
+
+
 
     }
 }

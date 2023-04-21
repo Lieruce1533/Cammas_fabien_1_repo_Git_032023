@@ -64,8 +64,8 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int pos = holder.getAdapterPosition();
-                mRecyclerViewInterface.onItemClick(pos);
+                //int pos = holder.getAdapterPosition();
+                mRecyclerViewInterface.onItemClick(neighbour);
                 /*if (mRecyclerViewInterface != null){
                     int pos = holder.getAdapterPosition();
 

@@ -94,16 +94,18 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
 
     /**
      * fired if the user clicks on a element of thee recyclerView
-     * @param position
+     * @param neighbour
      */
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(Neighbour neighbour) {
         Intent displayNeighbourActivityIntent = new Intent(NeighbourFragment.this.requireActivity(), DisplayNeighbourActivity.class);
-        displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
+        displayNeighbourActivityIntent.putExtra("neighbour", neighbour);
+
+        /** displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
         displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
         displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
         displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
-        displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());
+        displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());*/
 
         startActivity(displayNeighbourActivityIntent);
 
