@@ -17,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.OnClickNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,11 +30,11 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
-    private final RecyclerViewInterface mRecyclerViewInterface;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, RecyclerViewInterface mRecyclerViewInterface) {
+
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
         mNeighbours = items;
-        this.mRecyclerViewInterface = mRecyclerViewInterface;
+
     }
 
     @Override
@@ -64,16 +65,10 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //int pos = holder.getAdapterPosition();
-                mRecyclerViewInterface.onItemClick(neighbour);
-                /*if (mRecyclerViewInterface != null){
-                    int pos = holder.getAdapterPosition();
+                EventBus.getDefault().post(new OnClickNeighbourEvent(neighbour));
 
-                    if (pos != RecyclerView.NO_POSITION){
-                        mRecyclerViewInterface.onItemClick(pos);
-                    }
+                //mRecyclerViewInterface.onItemClick(neighbour);
 
-                }*/
             }
         });
     }
@@ -94,23 +89,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
-            /*Mon implémentation pour lancer DisplayNeighbourActivity aprés un clic sur un des neighbours
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mRecyclerViewInterface != null){
-                        int pos = getAdapterPosition();
-
-                        if (pos != RecyclerView.NO_POSITION){
-                            mRecyclerViewInterface.onItemClick(pos);
-                        }
-
-                    }
-                }
-            });*/
-
 
         }
     }

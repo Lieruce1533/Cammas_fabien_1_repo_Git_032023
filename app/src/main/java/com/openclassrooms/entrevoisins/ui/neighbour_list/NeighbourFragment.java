@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.OnClickNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -23,7 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.List;
 
 
-public class NeighbourFragment extends Fragment implements RecyclerViewInterface {
+public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
@@ -61,7 +62,7 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
      */
     private void initList() {
         mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, this ));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
     }
 
     @Override
@@ -94,20 +95,21 @@ public class NeighbourFragment extends Fragment implements RecyclerViewInterface
 
     /**
      * fired if the user clicks on a element of thee recyclerView
-     * @param neighbour
+     * @param eventView
      */
-    @Override
-    public void onItemClick(Neighbour neighbour) {
+
+
+    @Subscribe
+    public void onItemClick(OnClickNeighbourEvent eventView) {
         Intent displayNeighbourActivityIntent = new Intent(NeighbourFragment.this.requireActivity(), DisplayNeighbourActivity.class);
-        displayNeighbourActivityIntent.putExtra("neighbour", neighbour);
+        displayNeighbourActivityIntent.putExtra("neighbour", eventView.neighbour);
+        startActivity(displayNeighbourActivityIntent);
 
         /** displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
         displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
         displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
         displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
         displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());*/
-
-        startActivity(displayNeighbourActivityIntent);
 
     }
 }
