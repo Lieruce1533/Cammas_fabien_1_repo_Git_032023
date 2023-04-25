@@ -67,8 +67,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             public void onClick(View view) {
                 EventBus.getDefault().post(new OnClickNeighbourEvent(neighbour));
 
-                //mRecyclerViewInterface.onItemClick(neighbour);
-
             }
         });
     }

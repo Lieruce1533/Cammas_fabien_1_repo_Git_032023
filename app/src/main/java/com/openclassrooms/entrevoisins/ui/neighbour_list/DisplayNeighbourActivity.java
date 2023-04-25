@@ -12,8 +12,11 @@ import com.bumptech.glide.Glide;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class DisplayNeighbourActivity extends AppCompatActivity {
@@ -30,7 +33,8 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     TextView nSocialNet;
     @BindView(R.id.display_neighbour_about_me_textview)
     TextView nAboutMe;
-
+    @BindView(R.id.display_neighbour_return_previous_activity)
+    ImageView nReturn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +61,18 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
                 nAddress.setText(addressNeighbour);
                 nAboutMe.setText(aboutNeighbour);
                 nSocialNet.setText(socialNetNeighbour);
-
-
             }
         }
-
-
-
     }
+
+
+    @OnClick(R.id.display_neighbour_return_previous_activity)
+    void NavBack() {
+        Intent ReturnPreviousActivityIntent = new Intent(this, ListNeighbourActivity.class);
+        startActivity(ReturnPreviousActivityIntent);
+    }
+
+
+
+
 }

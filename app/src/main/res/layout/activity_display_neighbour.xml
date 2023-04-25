@@ -1,32 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:weightSum="6"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <ImageView
         android:id="@+id/display_neighbour_avatar"
-        android:layout_width="fill_parent"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="center"
 
-        android:layout_weight="2"
         android:contentDescription="@string/neighbour_picture"
-        tools:srcCompat="@tools:sample/avatars"/>
+        android:fadingEdge="vertical"
+        android:scaleType="fitCenter"
+        tools:srcCompat="@tools:sample/avatars"></ImageView>
+
+    <ImageView
+        android:id="@+id/display_neighbour_return_previous_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_back"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp">
+
+    </ImageView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/constraintLayoutGrey"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-24dp"
+        app:backgroundTint="@color/colorMildGrey"
+        app:tint="@color/colorYellow"
+        android:src="@drawable/ic_star_white_24dp"
+        app:fabSize="auto"
+        app:elevation="6dp">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayoutGrey"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
-        android:background="@color/colorGrey"
-        >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/display_neighbour_avatar"
+        android:background="@color/colorGrey">
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/LinearLayoutCompatNeighbour"
@@ -35,8 +58,8 @@
             android:layout_margin="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:orientation="vertical"
             android:background="@drawable/ic_rounded_edge_light_grey"
+            android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/LinearLayoutCompatNeighbourAboutMe"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                tools:text="Neighbour's Name"/>
+                tools:text="Neighbour's Name" />
 
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -60,14 +83,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/ImageAddress" />
+
                 <TextView
                     android:id="@+id/display_neighbour_address_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    tools:text="Address"/>
+                    tools:text="Address" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -78,14 +103,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/ImagePhone" />
+
                 <TextView
                     android:id="@+id/display_neighbour_phone_number_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    tools:text="Phone Number"/>
+                    tools:text="Phone Number" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,12 +123,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:contentDescription="@string/ImageSocialNetwork" />
+
                 <TextView
                     android:id="@+id/display_neighbour_social_network_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
-                    tools:text="Social Network Page"/>
+                    tools:text="Social Network Page" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -114,8 +142,8 @@
             android:layout_margin="12dp"
             android:layout_marginStart="12dp"
             android:layout_marginEnd="12dp"
-            android:orientation="vertical"
             android:background="@drawable/ic_rounded_edge_light_grey"
+            android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -126,14 +154,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                android:text="@string/About_Me"/>
+                android:text="@string/About_Me" />
 
             <TextView
                 android:id="@+id/display_neighbour_about_me_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
-                tools:text="@string/Text_About_Me"/>
+                tools:text="@string/Text_About_Me" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -142,4 +170,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</RelativeLayout>
