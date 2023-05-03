@@ -59,4 +59,15 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
     public void createNeighbour(Neighbour neighbour) {
         neighbours.add(neighbour);
     }
+
+
+
+    @Override
+    public void makeFavorite(Neighbour neighbour){
+        for (Neighbour neighbourFromList : neighbours) {
+            if (neighbour.getId() == neighbourFromList.getId()) {
+                neighbourFromList.setIsFavorite(true);
+            }
+        }
+    }
 }

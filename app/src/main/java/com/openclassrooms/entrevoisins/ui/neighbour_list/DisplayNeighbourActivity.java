@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
+import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -41,6 +42,7 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     @BindView(R.id.MarkAsFavorite)
     FloatingActionButton nFab;
     Boolean nIsFavorite;
+    Neighbour neighbour;
 
 
     @Override
@@ -49,8 +51,8 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_neighbour);
         ButterKnife.bind(this);
         Intent intent = getIntent();
-        Neighbour neighbour = intent.getParcelableExtra("neighbour");
-
+        neighbour = intent.getParcelableExtra("neighbour");
+        mApiService = DI.getNeighbourApiService();
         Glide.with(this).load(neighbour.getAvatarUrl()).into(nAvatar);
         nName.setText(neighbour.getName());
         nPhone.setText(neighbour.getPhoneNumber());
@@ -82,12 +84,10 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
         }
     }
 
-    /*@OnClick(R.id.MarkAsFavorite)
-    void MarkFavorite(Neighbour neighbour){
-        NeighbourFragment.makeFavorite(neighbour);
-    }*/
-
-
-
-
+    @OnClick(R.id.MarkAsFavorite)
+    void MarkFavorite(){
+        mApiService.makeFavorite(neighbour);
+        nIsFavorite = true;
+        SetFabStarColor();
+    }
 }
