@@ -3,23 +3,26 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.model.Neighbour;
+import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class DisplayNeighbourActivity extends AppCompatActivity {
+
+    private NeighbourApiService mApiService;
+
 
     @BindView(R.id.display_neighbour_avatar)
     ImageView nAvatar;
@@ -35,42 +38,54 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     TextView nAboutMe;
     @BindView(R.id.display_neighbour_return_previous_activity)
     ImageView nReturn;
+    @BindView(R.id.MarkAsFavorite)
+    FloatingActionButton nFab;
+    Boolean nIsFavorite;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_neighbour);
+        ButterKnife.bind(this);
         Intent intent = getIntent();
-        if (intent != null){
-            Neighbour neighbour = intent.getParcelableExtra("neighbour");
-            if (neighbour != null){
+        Neighbour neighbour = intent.getParcelableExtra("neighbour");
 
-                String nameNeighbour = neighbour.getName();
-                String addressNeighbour = neighbour.getAddress();
-                String phoneNumberNeighbour= neighbour.getPhoneNumber();
-                String aboutNeighbour = neighbour.getAboutMe();
-                String avatarNeighbour = neighbour.getAvatarUrl();
-                String socialNetNeighbour = ("www.facebook.fr/"+nameNeighbour);
+        Glide.with(this).load(neighbour.getAvatarUrl()).into(nAvatar);
+        nName.setText(neighbour.getName());
+        nPhone.setText(neighbour.getPhoneNumber());
+        nAddress.setText(neighbour.getAddress());
+        nAboutMe.setText(neighbour.getAboutMe());
+        nSocialNet.setText("www.facebook.fr/"+neighbour.getName());
+        nIsFavorite = neighbour.getIsFavorite();
+        SetFabStarColor();
 
-                ButterKnife.bind(this);
 
-                //nAvatar.setImageURI(Uri.parse(avatarNeighbour));
-                Glide.with(this).load(avatarNeighbour).into(nAvatar);
-                nName.setText(nameNeighbour);
-                nPhone.setText(phoneNumberNeighbour);
-                nAddress.setText(addressNeighbour);
-                nAboutMe.setText(aboutNeighbour);
-                nSocialNet.setText(socialNetNeighbour);
-            }
-        }
     }
+
+
 
 
     @OnClick(R.id.display_neighbour_return_previous_activity)
-    void NavBack() {
-        Intent ReturnPreviousActivityIntent = new Intent(this, ListNeighbourActivity.class);
-        startActivity(ReturnPreviousActivityIntent);
+    void NavBack() { finish();}
+
+
+    /**
+     * réalisation objectifs du 26/04/2023
+     * Display if neighbour is a Favorite
+     */
+    void SetFabStarColor() {
+        if (nIsFavorite) {
+            nFab.setImageTintList(getResources().getColorStateList(R.color.colorYellow));
+        } else {
+            nFab.setImageTintList(getResources().getColorStateList(R.color.colorWhite));
+        }
     }
+
+    /*@OnClick(R.id.MarkAsFavorite)
+    void MarkFavorite(Neighbour neighbour){
+        NeighbourFragment.makeFavorite(neighbour);
+    }*/
 
 
 

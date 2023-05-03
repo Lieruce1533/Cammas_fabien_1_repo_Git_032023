@@ -11,4 +11,6 @@
     <string name="addNeighbour">add a neighbour</string>
     <string name="title_activity_display_neighbour">DisplayNeighbourActivity</string>
     <string name="Text_About_Me">Describe what I like, what I want to do, What I wish to do, what I already did, What I Plan to Discover here.</string>
+    <string name="AddFavorite">Ajouter aux favoris</string>
+    <string name="ReturnMainActivity">Retour à l\'activité principale</string>
 </resources>

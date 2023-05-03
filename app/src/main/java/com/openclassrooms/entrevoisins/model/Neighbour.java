@@ -30,6 +30,9 @@ public class Neighbour implements Parcelable {
     /** About me */
     private String aboutMe;
 
+    /** Is Favorite*/
+    private boolean isFavorite;
+
     /**
      * Constructor
      * @param id
@@ -37,13 +40,14 @@ public class Neighbour implements Parcelable {
      * @param avatarUrl
      */
     public Neighbour(long id, String name, String avatarUrl, String address,
-                     String phoneNumber, String aboutMe) {
+                     String phoneNumber, String aboutMe, Boolean isFavorite) {
         this.id = id;
         this.name = name;
         this.avatarUrl = avatarUrl;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.aboutMe = aboutMe;
+        this.isFavorite = isFavorite;
     }
 
     protected Neighbour(Parcel in) {
@@ -53,6 +57,8 @@ public class Neighbour implements Parcelable {
         address = in.readString();
         phoneNumber = in.readString();
         aboutMe = in.readString();
+        isFavorite = in.readInt() == 1;
+
     }
 
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
@@ -115,6 +121,10 @@ public class Neighbour implements Parcelable {
         this.aboutMe = aboutMe;
     }
 
+    public boolean getIsFavorite() {return isFavorite;}
+
+    public void setIsFavorite(boolean isFavorite) {this.isFavorite = isFavorite;}
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,7 +151,7 @@ public class Neighbour implements Parcelable {
         parcel.writeString(address);
         parcel.writeString(phoneNumber);
         parcel.writeString(aboutMe);
-
+        parcel.writeInt(isFavorite ? 1 : 0);
 
     }
 }

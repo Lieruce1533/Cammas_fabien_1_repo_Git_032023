@@ -33,6 +33,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
     public static NeighbourFragment newInstance() {
@@ -85,6 +86,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe
@@ -95,6 +97,7 @@ public class NeighbourFragment extends Fragment {
 
     /**
      * fired if the user clicks on a element of thee recyclerView
+     *
      * @param eventView
      */
 
@@ -106,10 +109,11 @@ public class NeighbourFragment extends Fragment {
         startActivity(displayNeighbourActivityIntent);
 
         /** displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
-        displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
-        displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
-        displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
-        displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());*/
+         displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
+         displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
+         displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
+         displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());*/
 
     }
 }
+

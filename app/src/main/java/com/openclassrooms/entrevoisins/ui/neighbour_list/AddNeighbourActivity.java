@@ -40,6 +40,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
 
     private NeighbourApiService mApiService;
     private String mNeighbourImage;
+    private Boolean mFavorite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class AddNeighbourActivity extends AppCompatActivity {
         mNeighbourImage = randomImage();
         Glide.with(this).load(mNeighbourImage).placeholder(R.drawable.ic_account)
                 .apply(RequestOptions.circleCropTransform()).into(avatar);
+        mFavorite = false;
         nameInput.getEditText().addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
@@ -87,8 +89,9 @@ public class AddNeighbourActivity extends AppCompatActivity {
                 mNeighbourImage,
                 addressInput.getEditText().getText().toString(),
                 phoneInput.getEditText().getText().toString(),
-                aboutMeInput.getEditText().getText().toString()
-        );
+                aboutMeInput.getEditText().getText().toString(),
+                mFavorite
+                );
         mApiService.createNeighbour(neighbour);
         finish();
     }
