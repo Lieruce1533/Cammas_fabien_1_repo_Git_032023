@@ -87,7 +87,7 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     @OnClick(R.id.MarkAsFavorite)
     void MarkFavorite(){
         mApiService.makeFavorite(neighbour);
-        nIsFavorite = true;
+        nIsFavorite = !nIsFavorite;
         SetFabStarColor();
     }
 }
