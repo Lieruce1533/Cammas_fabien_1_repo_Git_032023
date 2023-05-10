@@ -13,9 +13,6 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
 
-    /**
-     * réalisation objectifs du 26/04/2023
-     */
     private List<Neighbour> favoriteNeighbours;
     {
         List<Neighbour> list = new ArrayList<>();
@@ -25,6 +22,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
             }
         }
         favoriteNeighbours = list;
+
     }
 
 
@@ -38,7 +36,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
 
     /**
-     * réalisation objectifs du 26/04/2023
+     * {@inheritDoc}
      */
     @Override
     public List<Neighbour> getFavoriteNeighbours() {return favoriteNeighbours;}
@@ -63,14 +61,14 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
 
 
     @Override
-    public void makeFavorite(Neighbour neighbour){
-        for (Neighbour neighbourFromList : neighbours) {
+    public void changeStatusFavorite(Neighbour neighbour){
+         for (Neighbour neighbourFromList : neighbours) {
             if (neighbour.getId() == neighbourFromList.getId()) {
-                if (neighbourFromList.getIsFavorite()){
-                    neighbourFromList.setIsFavorite(false);
-                }else
-                neighbourFromList.setIsFavorite(true);
+                neighbourFromList.setIsFavorite(!neighbourFromList.getIsFavorite());
+
             }
-        }
+         }
     }
+
+
 }
