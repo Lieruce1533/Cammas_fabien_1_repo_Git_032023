@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,6 +31,11 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
+    public static final String KEY_POSITION = "position";
+    private static final int REQUEST_UPDATE_NEIGHBOUR = 1 ;
+    private int position;
+
+    FragmentActivity listener;
 
 
     /**
@@ -36,15 +43,33 @@ public class NeighbourFragment extends Fragment {
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int position) {
         NeighbourFragment fragment = new NeighbourFragment();
+        Bundle args = new Bundle(); // ajout
+        args.putInt(KEY_POSITION, position); //ajout
+        fragment.setArguments(args); //ajout
+
         return fragment;
     }
+    /**
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof DisplayNeighbourActivity){
+            this.listener = (FragmentActivity) context;
+        }
+    }
+     */
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        if (getArguments() != null) {
+            position = getArguments().getInt(KEY_POSITION); //ajout
+        }
+
     }
 
     @Override
@@ -55,21 +80,34 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
         return view;
     }
 
     /**
      * Init the List of neighbours
+     *
+     * mise place du view pager
      */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
+        //int  position = getArguments().getInt(KEY_POSITION, -1);
+        switch(position){
+            case 0:
+                mNeighbours = mApiService.getNeighbours();
+                break;
+            case 1:
+                mNeighbours = mApiService.getFavoriteNeighbours();
+                break;
+        }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
         initList();
+
     }
 
     @Override
@@ -84,6 +122,7 @@ public class NeighbourFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
+
     /**
      * Fired if the user clicks on a delete button
      *
@@ -96,24 +135,24 @@ public class NeighbourFragment extends Fragment {
     }
 
     /**
-     * fired if the user clicks on a element of thee recyclerView
-     *
-     * @param eventView
+     * update list after a favorite status change
      */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_UPDATE_NEIGHBOUR && resultCode == ListNeighbourActivity.RESULT_OK) {
+            Neighbour updatedNeighbour = data.getParcelableExtra("updated_neighbour");
+            int index = mNeighbours.indexOf(updatedNeighbour);
+            if (index !=-1) {
+                mNeighbours.set(index, updatedNeighbour);
+                MyNeighbourRecyclerViewAdapter adapter = (MyNeighbourRecyclerViewAdapter) mRecyclerView.getAdapter();
+                adapter.notifyItemChanged(index);
 
-
-    @Subscribe
-    public void onItemClick(OnClickNeighbourEvent eventView) {
-        Intent displayNeighbourActivityIntent = new Intent(NeighbourFragment.this.requireActivity(), DisplayNeighbourActivity.class);
-        displayNeighbourActivityIntent.putExtra("neighbour", eventView.neighbour);
-        startActivity(displayNeighbourActivityIntent);
-
-        /** displayNeighbourActivityIntent.putExtra("Name_Neighbour", mNeighbours.get(position).getName());
-         displayNeighbourActivityIntent.putExtra("Address", mNeighbours.get(position).getAddress());
-         displayNeighbourActivityIntent.putExtra("Phone_Number", mNeighbours.get(position).getPhoneNumber());
-         displayNeighbourActivityIntent.putExtra("About_Me", mNeighbours.get(position).getAboutMe());
-         displayNeighbourActivityIntent.putExtra("Avatar_neighbour", mNeighbours.get(position).getAvatarUrl());*/
-
+            }
+        }
     }
+
+
+
+
 }
 

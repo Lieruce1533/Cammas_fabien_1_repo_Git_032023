@@ -6,17 +6,20 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 
 public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
+    private final int NUM_TABS = 2;
 
     public ListNeighbourPagerAdapter(FragmentManager fm) {
+
         super(fm);
     }
 
     /**
      * getItem is called to instantiate the fragment for the given page.
+     * fc mon implémentation de changement de page, ajout de position. fc
      */
     @Override
     public Fragment getItem(int position) {
-        return NeighbourFragment.newInstance();
+        return NeighbourFragment.newInstance(position);
     }
 
     /**
@@ -24,6 +27,6 @@ public class ListNeighbourPagerAdapter extends FragmentPagerAdapter {
      */
     @Override
     public int getCount() {
-        return 1;
+        return NUM_TABS;
     }
 }

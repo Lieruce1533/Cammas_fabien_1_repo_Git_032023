@@ -64,16 +64,22 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
 
 
     }
+    /**
 
-
+    void updateNeighbourFragment(){
+        NeighbourFragment fragment = (NeighbourFragment) getSupportFragmentManager().getFragments().get(1);
+        fragment.onResume();
+    }
+     */
 
 
     @OnClick(R.id.display_neighbour_return_previous_activity)
-    void NavBack() { finish();}
+    void NavBack() {
+
+        finish();}
 
 
     /**
-     * réalisation objectifs du 26/04/2023
      * Display if neighbour is a Favorite
      */
     void SetFabStarColor() {
@@ -85,9 +91,13 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.MarkAsFavorite)
-    void MarkFavorite(){
-        mApiService.makeFavorite(neighbour);
-        nIsFavorite = true;
+    void SetFavorite(){
+        mApiService.changeStatusFavorite(neighbour);
+        nIsFavorite = !nIsFavorite;
+        Intent intent = new Intent();
+        intent.putExtra("updated_neighbour", neighbour);
+        setResult(RESULT_OK, intent);
         SetFabStarColor();
+
     }
 }
