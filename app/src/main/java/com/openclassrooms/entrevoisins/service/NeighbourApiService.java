@@ -17,7 +17,6 @@ public interface NeighbourApiService {
     List<Neighbour> getNeighbours();
 
     /**
-     * réalisation objectifs du 26/04/2023
      * Get all the neighbours tagged as favorite
      * @return {@link List}
      */

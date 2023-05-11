@@ -42,7 +42,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.itemview_neighbour, parent, false);
 
-
         return new ViewHolder(view);
     }
 

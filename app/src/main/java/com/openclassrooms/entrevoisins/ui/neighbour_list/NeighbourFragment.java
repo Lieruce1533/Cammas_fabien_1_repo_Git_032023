@@ -8,6 +8,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,11 +34,7 @@ public class NeighbourFragment extends Fragment {
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
     public static final String KEY_POSITION = "position";
-    private static final int REQUEST_UPDATE_NEIGHBOUR = 1 ;
     private int position;
-
-    FragmentActivity listener;
-
 
     /**
      * Create and return a new instance
@@ -51,25 +49,12 @@ public class NeighbourFragment extends Fragment {
 
         return fragment;
     }
-    /**
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof DisplayNeighbourActivity){
-            this.listener = (FragmentActivity) context;
-        }
-    }
-     */
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        if (getArguments() != null) {
-            position = getArguments().getInt(KEY_POSITION); //ajout
-        }
-
+        position = getArguments().getInt(KEY_POSITION); //ajout
     }
 
     @Override
@@ -80,17 +65,11 @@ public class NeighbourFragment extends Fragment {
         mRecyclerView = (RecyclerView) view;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-
         return view;
     }
 
-    /**
-     * Init the List of neighbours
-     *
-     * mise place du view pager
-     */
     private void initList() {
-        //int  position = getArguments().getInt(KEY_POSITION, -1);
+
         switch(position){
             case 0:
                 mNeighbours = mApiService.getNeighbours();
@@ -100,14 +79,14 @@ public class NeighbourFragment extends Fragment {
                 break;
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
-
+        Log.d("DEBUG", "init list");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("DEBUG", "on resume");
         initList();
-
     }
 
     @Override
@@ -122,7 +101,6 @@ public class NeighbourFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
-
     /**
      * Fired if the user clicks on a delete button
      *
@@ -133,26 +111,5 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
-
-    /**
-     * update list after a favorite status change
-     */
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_UPDATE_NEIGHBOUR && resultCode == ListNeighbourActivity.RESULT_OK) {
-            Neighbour updatedNeighbour = data.getParcelableExtra("updated_neighbour");
-            int index = mNeighbours.indexOf(updatedNeighbour);
-            if (index !=-1) {
-                mNeighbours.set(index, updatedNeighbour);
-                MyNeighbourRecyclerViewAdapter adapter = (MyNeighbourRecyclerViewAdapter) mRecyclerView.getAdapter();
-                adapter.notifyItemChanged(index);
-
-            }
-        }
-    }
-
-
-
-
 }
 

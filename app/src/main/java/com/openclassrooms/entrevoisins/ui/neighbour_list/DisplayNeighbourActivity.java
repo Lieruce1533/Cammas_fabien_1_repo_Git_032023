@@ -61,17 +61,7 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
         nSocialNet.setText("www.facebook.fr/"+neighbour.getName());
         nIsFavorite = neighbour.getIsFavorite();
         SetFabStarColor();
-
-
     }
-    /**
-
-    void updateNeighbourFragment(){
-        NeighbourFragment fragment = (NeighbourFragment) getSupportFragmentManager().getFragments().get(1);
-        fragment.onResume();
-    }
-     */
-
 
     @OnClick(R.id.display_neighbour_return_previous_activity)
     void NavBack() {
@@ -95,10 +85,6 @@ public class DisplayNeighbourActivity extends AppCompatActivity {
     void SetFavorite(){
         mApiService.changeStatusFavorite(neighbour);
         nIsFavorite = !nIsFavorite;
-        Intent intent = new Intent();
-        intent.putExtra("updated_neighbour", neighbour);
-        setResult(RESULT_OK, intent);
         SetFabStarColor();
-
     }
 }

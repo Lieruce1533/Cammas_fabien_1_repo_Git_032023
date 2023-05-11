@@ -1,5 +1,7 @@
 package com.openclassrooms.entrevoisins.service;
 
+import android.util.Log;
+
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
@@ -12,19 +14,6 @@ import java.util.stream.Collectors;
 public class DummyNeighbourApiService implements  NeighbourApiService {
 
     private List<Neighbour> neighbours = DummyNeighbourGenerator.generateNeighbours();
-
-    private List<Neighbour> favoriteNeighbours;
-    {
-        List<Neighbour> list = new ArrayList<>();
-        for (Neighbour neighbour : neighbours) {
-            if (neighbour.getIsFavorite()) {
-                list.add(neighbour);
-            }
-        }
-        favoriteNeighbours = list;
-
-    }
-
 
     /**
      * {@inheritDoc}
@@ -39,7 +28,16 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
      * {@inheritDoc}
      */
     @Override
-    public List<Neighbour> getFavoriteNeighbours() {return favoriteNeighbours;}
+    public List<Neighbour> getFavoriteNeighbours() {
+        List<Neighbour> list = new ArrayList<>();
+        for (Neighbour neighbour : neighbours) {
+            if (neighbour.getIsFavorite()) {
+                Log.d("DEBUG", neighbour.getName());
+                list.add(neighbour);
+            }
+        }
+        return list;
+    }
 
     /**
      * {@inheritDoc}
@@ -65,10 +63,7 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
          for (Neighbour neighbourFromList : neighbours) {
             if (neighbour.getId() == neighbourFromList.getId()) {
                 neighbourFromList.setIsFavorite(!neighbourFromList.getIsFavorite());
-
             }
          }
     }
-
-
 }

@@ -28,7 +28,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
     ViewPager mViewPager;
 
     ListNeighbourPagerAdapter mPagerAdapter;
-    private static final int REQUEST_CODE_UPDATE_ITEM = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,6 @@ public class ListNeighbourActivity extends AppCompatActivity {
 
     /**
      * fired if the user clicks on a element of the recyclerView
-     *
      * @param eventView
      */
 
@@ -60,7 +58,7 @@ public class ListNeighbourActivity extends AppCompatActivity {
     public void onItemClick(OnClickNeighbourEvent eventView) {
         Intent displayNeighbourActivityIntent = new Intent(this, DisplayNeighbourActivity.class);
         displayNeighbourActivityIntent.putExtra("neighbour", eventView.neighbour);
-        startActivityForResult(displayNeighbourActivityIntent, REQUEST_CODE_UPDATE_ITEM);
+        startActivity(displayNeighbourActivityIntent);
 
     }
 }
