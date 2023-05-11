@@ -18,6 +18,7 @@ import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
 import com.openclassrooms.entrevoisins.events.OnClickNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveFavoriteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
@@ -78,7 +79,7 @@ public class NeighbourFragment extends Fragment {
                 mNeighbours = mApiService.getFavoriteNeighbours();
                 break;
         }
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, position));
         Log.d("DEBUG", "init list");
     }
 
@@ -101,6 +102,7 @@ public class NeighbourFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
+
     /**
      * Fired if the user clicks on a delete button
      *
@@ -109,6 +111,17 @@ public class NeighbourFragment extends Fragment {
     @Subscribe
     public void onDeleteNeighbour(DeleteNeighbourEvent event) {
         mApiService.deleteNeighbour(event.neighbour);
+        initList();
+    }
+
+    /**
+     * Fired if the user clicks on a favorite button
+     *
+     * @param event
+     */
+    @Subscribe
+    public void removeFromFavorite(RemoveFavoriteNeighbourEvent event) {
+        mApiService.outOfFavorite(event.neighbour);
         initList();
     }
 }

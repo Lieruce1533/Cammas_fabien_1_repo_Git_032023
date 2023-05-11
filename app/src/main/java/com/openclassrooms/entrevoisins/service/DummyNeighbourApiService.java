@@ -6,7 +6,6 @@ import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Dummy mock for the Api
@@ -65,5 +64,10 @@ public class DummyNeighbourApiService implements  NeighbourApiService {
                 neighbourFromList.setIsFavorite(!neighbourFromList.getIsFavorite());
             }
          }
+    }
+
+    @Override
+    public void outOfFavorite(Neighbour neighbour){
+        neighbour.setIsFavorite(false);
     }
 }

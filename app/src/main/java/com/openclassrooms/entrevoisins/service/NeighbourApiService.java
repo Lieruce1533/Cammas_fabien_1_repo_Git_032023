@@ -40,6 +40,5 @@ public interface NeighbourApiService {
     */
     void changeStatusFavorite(Neighbour neighbour);
 
-
-
+    void outOfFavorite(Neighbour neighbour);
 }
