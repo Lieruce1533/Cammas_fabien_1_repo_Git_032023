@@ -3,6 +3,7 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 import static androidx.core.content.ContextCompat.startActivity;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -17,6 +18,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.OnClickNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveFavoriteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,15 +32,26 @@ import butterknife.ButterKnife;
 public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeighbourRecyclerViewAdapter.ViewHolder> {
 
     private final List<Neighbour> mNeighbours;
+    private int currentPosition;
 
-    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items) {
+
+
+    public MyNeighbourRecyclerViewAdapter(List<Neighbour> items, int currentPosition) {
         mNeighbours = items;
+        this.currentPosition = currentPosition;
     }
+
+    /**
+    public void setViewPager(ViewPager viewPager) {
+        mViewPager = viewPager;
+    }
+     */
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.itemview_neighbour, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -50,6 +64,17 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
                 .apply(RequestOptions.circleCropTransform())
                 .into(holder.mNeighbourAvatar);
 
+        // Set the visibility of the buttons based on the ViewPager position
+        if (currentPosition == 0) {
+            // Show the "Delete" button and hide the "Favorite" button
+            holder.mDeleteButton.setVisibility(View.VISIBLE);
+            holder.mFavoriteButton.setVisibility(View.GONE);
+        } else {
+            // Show the "Favorite" button and hide the "Delete" button
+            holder.mDeleteButton.setVisibility(View.GONE);
+            holder.mFavoriteButton.setVisibility(View.VISIBLE);
+        }
+
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +82,20 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
+        holder.mFavoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View vue) {
+                EventBus.getDefault().post(new RemoveFavoriteNeighbourEvent(neighbour));
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EventBus.getDefault().post(new OnClickNeighbourEvent(neighbour));
+
+            }
+        });
     }
 
     @Override
@@ -71,20 +110,13 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         public TextView mNeighbourName;
         @BindView(R.id.item_list_delete_button)
         public ImageButton mDeleteButton;
+        @BindView(R.id.item_list_fav_button)
+        public ImageButton mFavoriteButton;
 
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
 
-            //Mon implémentation pour lancer DisplayNeighbourActivity aprés un clic sur un des neighbours
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent displayNeighbourActivityIntent = new Intent(itemView.getContext(), DisplayNeighbourActivity.class);
-                    view.getContext().startActivity(displayNeighbourActivityIntent);
-                }
-            });
         }
     }
 }

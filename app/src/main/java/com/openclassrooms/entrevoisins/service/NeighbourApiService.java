@@ -17,6 +17,12 @@ public interface NeighbourApiService {
     List<Neighbour> getNeighbours();
 
     /**
+     * Get all the neighbours tagged as favorite
+     * @return {@link List}
+     */
+    List<Neighbour> getFavoriteNeighbours();
+
+    /**
      * Deletes a neighbour
      * @param neighbour
      */
@@ -27,4 +33,12 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    /**
+    * change the favorite status of a neighbour
+    * @param neighbour
+    */
+    void changeStatusFavorite(Neighbour neighbour);
+
+    void outOfFavorite(Neighbour neighbour);
 }

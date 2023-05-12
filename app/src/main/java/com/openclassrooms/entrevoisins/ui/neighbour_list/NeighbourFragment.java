@@ -1,11 +1,15 @@
 package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +17,15 @@ import android.view.ViewGroup;
 import com.openclassrooms.entrevoisins.R;
 import com.openclassrooms.entrevoisins.di.DI;
 import com.openclassrooms.entrevoisins.events.DeleteNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.OnClickNeighbourEvent;
+import com.openclassrooms.entrevoisins.events.RemoveFavoriteNeighbourEvent;
 import com.openclassrooms.entrevoisins.model.Neighbour;
 import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,14 +34,20 @@ public class NeighbourFragment extends Fragment {
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-
+    public static final String KEY_POSITION = "position";
+    private int position;
 
     /**
      * Create and return a new instance
+     *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance() {
+    public static NeighbourFragment newInstance(int position) {
         NeighbourFragment fragment = new NeighbourFragment();
+        Bundle args = new Bundle(); // ajout
+        args.putInt(KEY_POSITION, position); //ajout
+        fragment.setArguments(args); //ajout
+
         return fragment;
     }
 
@@ -42,6 +55,7 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
+        position = getArguments().getInt(KEY_POSITION); //ajout
     }
 
     @Override
@@ -55,17 +69,24 @@ public class NeighbourFragment extends Fragment {
         return view;
     }
 
-    /**
-     * Init the List of neighbours
-     */
     private void initList() {
-        mNeighbours = mApiService.getNeighbours();
-        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours));
+
+        switch(position){
+            case 0:
+                mNeighbours = mApiService.getNeighbours();
+                break;
+            case 1:
+                mNeighbours = mApiService.getFavoriteNeighbours();
+                break;
+        }
+        mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, position));
+        Log.d("DEBUG", "init list");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d("DEBUG", "on resume");
         initList();
     }
 
@@ -81,8 +102,10 @@ public class NeighbourFragment extends Fragment {
         EventBus.getDefault().unregister(this);
     }
 
+
     /**
      * Fired if the user clicks on a delete button
+     *
      * @param event
      */
     @Subscribe
@@ -90,4 +113,16 @@ public class NeighbourFragment extends Fragment {
         mApiService.deleteNeighbour(event.neighbour);
         initList();
     }
+
+    /**
+     * Fired if the user clicks on a favorite button
+     *
+     * @param event
+     */
+    @Subscribe
+    public void removeFromFavorite(RemoveFavoriteNeighbourEvent event) {
+        mApiService.outOfFavorite(event.neighbour);
+        initList();
+    }
 }
+

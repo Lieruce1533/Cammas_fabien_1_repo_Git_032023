@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".DisplayNeighbourActivity"
+            android:name=".ui.neighbour_list.DisplayNeighbourActivity"
             android:exported="false"
             android:label="@string/title_activity_display_neighbour"
             android:theme="@style/AppTheme.NoActionBar">
@@ -29,6 +29,7 @@
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
