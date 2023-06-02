@@ -44,9 +44,9 @@ public class NeighbourFragment extends Fragment {
      */
     public static NeighbourFragment newInstance(int position) {
         NeighbourFragment fragment = new NeighbourFragment();
-        Bundle args = new Bundle(); // ajout
-        args.putInt(KEY_POSITION, position); //ajout
-        fragment.setArguments(args); //ajout
+        Bundle args = new Bundle();
+        args.putInt(KEY_POSITION, position);
+        fragment.setArguments(args);
 
         return fragment;
     }
@@ -55,7 +55,7 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        position = getArguments().getInt(KEY_POSITION); //ajout
+        position = getArguments().getInt(KEY_POSITION);
     }
 
     @Override
@@ -71,13 +71,10 @@ public class NeighbourFragment extends Fragment {
 
     private void initList() {
 
-        switch(position){
-            case 0:
-                mNeighbours = mApiService.getNeighbours();
-                break;
-            case 1:
-                mNeighbours = mApiService.getFavoriteNeighbours();
-                break;
+        if (position == 0){
+            mNeighbours = mApiService.getNeighbours();
+        }else{
+            mNeighbours = mApiService.getFavoriteNeighbours();
         }
         mRecyclerView.setAdapter(new MyNeighbourRecyclerViewAdapter(mNeighbours, position));
         Log.d("DEBUG", "init list");
