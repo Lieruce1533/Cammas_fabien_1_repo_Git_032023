@@ -49,6 +49,7 @@ public class NeighbourServiceTest {
                 "+33 6 86 57 90 14",  "Bonjour !Je souhaiterais faire de la marche nordique. Pas initiée, je recherche une ou plusieurs personnes susceptibles de m'accompagner !J'aime les jeux de cartes tels la belote et le tarot..",false);
         List<Neighbour> neighbours = service.getNeighbours();
         assertEquals(12,neighbours.size());
+        assertFalse(neighbours.contains(neighbourToAdd));
         service.createNeighbour(neighbourToAdd);
         assertEquals(13, neighbours.size());
         assertTrue(neighbours.contains(neighbourToAdd));

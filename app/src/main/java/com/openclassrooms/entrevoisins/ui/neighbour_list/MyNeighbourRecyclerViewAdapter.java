@@ -41,12 +41,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         this.currentPosition = currentPosition;
     }
 
-    /**
-    public void setViewPager(ViewPager viewPager) {
-        mViewPager = viewPager;
-    }
-     */
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

@@ -69,7 +69,7 @@ public class NeighboursListTest {
      * We ensure that our recyclerview is displaying at least one item
      */
     @Test
-    public void myNeighboursList1_shouldNotBeEmpty() {
+    public void myNeighboursList2_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
@@ -79,7 +79,7 @@ public class NeighboursListTest {
      * When we delete an item, the item is no more shown
      */
     @Test
-    public void myNeighboursList2_deleteAction_shouldRemoveItem() {
+    public void myNeighboursList3_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
@@ -93,7 +93,7 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList3_onItemAction_shouldStart_DisplayNeighbourActivity(){
+    public void myNeighboursList4_onItemAction_shouldStart_DisplayNeighbourActivity(){
 
         onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
@@ -107,7 +107,7 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList4_DisplayActivity_makeFavoriteAction_shouldAdd_ItemToListFavorite(){
+    public void myNeighboursList0_DisplayActivity_makeFavoriteAction_shouldAdd_ItemToListFavorite(){
         onView(withId(R.id.container)).perform(swipeLeft());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT_FAVORITE));
         onView(withId(R.id.container)).perform(swipeRight());
@@ -124,7 +124,7 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList5_favoriteAction_shouldRemoveItem() {
+    public void myNeighboursList1_favoriteAction_shouldRemoveItem() {
 
         onView(withId(R.id.container)).perform(swipeLeft());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed()))

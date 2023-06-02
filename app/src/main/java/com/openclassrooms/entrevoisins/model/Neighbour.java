@@ -50,6 +50,10 @@ public class Neighbour implements Parcelable {
         this.isFavorite = isFavorite;
     }
 
+    /**
+     * implementation parcelable part 1
+     * @param in
+     */
     protected Neighbour(Parcel in) {
         id = in.readLong();
         name = in.readString();
@@ -61,6 +65,9 @@ public class Neighbour implements Parcelable {
 
     }
 
+    /**
+     * implementation parcelable part Creator
+     */
     public static final Creator<Neighbour> CREATOR = new Creator<Neighbour>() {
         @Override
         public Neighbour createFromParcel(Parcel in) {
@@ -143,6 +150,11 @@ public class Neighbour implements Parcelable {
         return 0;
     }
 
+    /**
+     * Implementation parcelable part 2
+     * @param parcel
+     * @param i
+     */
     @Override
     public void writeToParcel(@NonNull Parcel parcel, int i) {
         parcel.writeLong(id);
