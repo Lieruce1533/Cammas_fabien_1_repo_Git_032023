@@ -59,6 +59,7 @@
         android:layout_gravity="end|bottom"
         android:layout_margin="16dp"
         app:backgroundTint="@color/colorPrimary"
-        app:srcCompat="@drawable/ic_person_add_white_24dp" />
+        app:srcCompat="@drawable/ic_person_add_white_24dp"
+        android:contentDescription="@string/addNeighbour" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

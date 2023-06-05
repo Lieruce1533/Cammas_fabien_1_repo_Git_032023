@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/display_neighbour_avatar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/neighbour_picture"
+        android:scaleType="centerCrop"
+        tools:srcCompat="@tools:sample/avatars">
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/display_neighbour_return_previous_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_menu_back"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/ReturnMainActivity">
+    </ImageView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/MarkAsFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/LinearLayoutGrey"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="-24dp"
+        app:backgroundTint="@color/colorMildGrey"
+        app:tint="@color/colorWhite"
+        android:src="@drawable/ic_star_white_24dp"
+        app:fabSize="auto"
+        app:elevation="6dp"
+        android:contentDescription="@string/AddFavorite">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/LinearLayoutGrey"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/display_neighbour_avatar"
+        android:layout_alignStart="@id/display_neighbour_avatar"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="-1dp"
+        android:background="@color/colorGrey"
+        android:gravity="start"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/LinearLayoutCompatNeighbour"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/ic_rounded_edge_light_grey"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/display_neighbour_name_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:text="Neighbour's Name" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/ImageAddress"
+                    app:tint="@color/colorBordeaux"
+                    android:src="@drawable/stat_sys_gps_on_19"/>
+
+                <TextView
+                    android:id="@+id/display_neighbour_address_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    tools:text="Address" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/colorBordeaux"
+                    android:src="@drawable/ic_emergency_24"
+                    android:contentDescription="@string/ImagePhone" />
+
+                <TextView
+                    android:id="@+id/display_neighbour_phone_number_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    tools:text="Phone Number" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:tint="@color/colorBordeaux"
+                    android:src="@drawable/globe_24"
+                    android:contentDescription="@string/ImageSocialNetwork" />
+
+                <TextView
+                    android:id="@+id/display_neighbour_social_network_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    tools:text="Social Network Page" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/LinearLayoutCompatNeighbourAboutMe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:background="@drawable/ic_rounded_edge_light_grey"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/LinearLayoutCompatNeighbour">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:text="@string/About_Me" />
+
+            <TextView
+                android:id="@+id/display_neighbour_about_me_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                tools:text="@string/Text_About_Me" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</RelativeLayout>
