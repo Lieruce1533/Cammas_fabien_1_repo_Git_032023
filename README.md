@@ -7,7 +7,7 @@ it's possible to:
 - add a new Neighboor
 - delete a Neighboor
 - create a favorite list of Neighboor
-- display the detail of a Neighboor
+- display the details of a Neighboor
 
 
 ## 🛠️ Technologies involved
