@@ -64,6 +64,17 @@ public class Neighbour implements Parcelable {
         isFavorite = in.readInt() == 1;
 
     }
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(avatarUrl);
+        parcel.writeString(address);
+        parcel.writeString(phoneNumber);
+        parcel.writeString(aboutMe);
+        parcel.writeInt(isFavorite ? 1 : 0);
+
+    }
 
     /**
      * implementation parcelable part Creator
@@ -155,15 +166,5 @@ public class Neighbour implements Parcelable {
      * @param parcel
      * @param i
      */
-    @Override
-    public void writeToParcel(@NonNull Parcel parcel, int i) {
-        parcel.writeLong(id);
-        parcel.writeString(name);
-        parcel.writeString(avatarUrl);
-        parcel.writeString(address);
-        parcel.writeString(phoneNumber);
-        parcel.writeString(aboutMe);
-        parcel.writeInt(isFavorite ? 1 : 0);
 
-    }
 }
