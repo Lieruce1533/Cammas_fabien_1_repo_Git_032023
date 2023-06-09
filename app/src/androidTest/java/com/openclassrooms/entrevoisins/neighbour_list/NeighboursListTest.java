@@ -2,6 +2,7 @@
 package com.openclassrooms.entrevoisins.neighbour_list;
 
 import androidx.test.espresso.contrib.RecyclerViewActions;
+import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
@@ -13,6 +14,7 @@ import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 import com.openclassrooms.entrevoisins.utils.NoMoreFavoriteViewAction;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
@@ -34,8 +36,11 @@ import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.IsNull.notNullValue;
+
+import android.os.SystemClock;
 
 import java.util.List;
 
@@ -57,7 +62,7 @@ public class NeighboursListTest {
 
     @Rule
     public ActivityTestRule<ListNeighbourActivity> mActivityRule =
-            new ActivityTestRule(ListNeighbourActivity.class);
+            new ActivityTestRule<>(ListNeighbourActivity.class);
 
     @Before
     public void setUp() {
@@ -65,11 +70,12 @@ public class NeighboursListTest {
         assertThat(mActivity, notNullValue());
     }
 
+
     /**
      * We ensure that our recyclerview is displaying at least one item
      */
     @Test
-    public void myNeighboursList2_shouldNotBeEmpty() {
+    public void myNeighboursList1_shouldNotBeEmpty() {
         // First scroll to the position that needs to be matched and click on it.
         onView(allOf(withId(R.id.list_neighbours), isDisplayed()))
                 .check(matches(hasMinimumChildCount(1)));
@@ -79,7 +85,7 @@ public class NeighboursListTest {
      * When we delete an item, the item is no more shown
      */
     @Test
-    public void myNeighboursList3_deleteAction_shouldRemoveItem() {
+    public void myNeighboursList2_deleteAction_shouldRemoveItem() {
         // Given : We remove the element at position 2
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
@@ -93,12 +99,11 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList4_onItemAction_shouldStart_DisplayNeighbourActivity(){
+    public void myNeighboursList3_onItemAction_shouldStart_DisplayNeighbourActivity(){
 
         onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
         String itemName = mNeighboursTest.get(1).getName();
-        onView(withId(R.id.display_neighbour_name_textview)).check(matches(isDisplayed()));
         onView(withId(R.id.display_neighbour_name_textview)).check(matches(withText(itemName)));
         onView(withId(R.id.display_neighbour_return_previous_activity)).perform(click());
     }
@@ -107,15 +112,15 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList0_DisplayActivity_makeFavoriteAction_shouldAdd_ItemToListFavorite(){
-        onView(withId(R.id.container)).perform(swipeLeft());
+    public void myNeighboursList4_DisplayActivity_makeFavoriteAction_shouldAdd_ItemToListFavorite(){
+        onView(withText("Favorites")).perform(click());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT_FAVORITE));
-        onView(withId(R.id.container)).perform(swipeRight());
+        onView(withText("My neighbours")).perform(click());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
-                .perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.MarkAsFavorite)).perform(click());
         onView(withId(R.id.display_neighbour_return_previous_activity)).perform(click());
-        onView(withId(R.id.container)).perform(swipeLeft());
+        onView(withText("Favorites")).perform(click());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT_FAVORITE+1));
 
         }
@@ -124,9 +129,12 @@ public class NeighboursListTest {
      */
 
     @Test
-    public void myNeighboursList1_favoriteAction_shouldRemoveItem() {
-
-        onView(withId(R.id.container)).perform(swipeLeft());
+    public void myNeighboursList5_favoriteAction_shouldRemoveItem() {
+        onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
+                .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.MarkAsFavorite)).perform(click());
+        onView(withId(R.id.display_neighbour_return_previous_activity)).perform(click());
+        onView(withText("Favorites")).perform(click());
         onView(allOf(withId(R.id.list_neighbours),isDisplayed()))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, new NoMoreFavoriteViewAction()));
         onView(allOf(withId(R.id.list_neighbours),isDisplayed())).check(withItemCount(ITEMS_COUNT_FAVORITE));
